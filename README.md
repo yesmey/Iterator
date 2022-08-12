@@ -17,7 +17,7 @@ static void Reverse<T>(Span<T> span)
     ref T last = ref Unsafe.Subtract(ref Unsafe.Add(ref first, span.Length), 1);
     do
     {
-        Swap(ref left.Value, ref right.Value);
+        Swap(ref left, ref right);
         first = ref Unsafe.Add(ref first, 1);
         last = ref Unsafe.Subtract(ref last, 1);
     } while (Unsafe.IsAddressLessThan(ref first, ref last));
