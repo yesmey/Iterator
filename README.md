@@ -1,10 +1,12 @@
-# Iterator
+## Introduction
 A little experiment of implementing a C++-style iterator in C#.
 It makes use of C# 11 preview that allows reference members in ref structs.
 
-## Example
+**This type is only intended for low-level use. Incorrect usage might corrupt memory or destabilize the .NET runtime**
 
-### Reverse
+------
+
+### Usage
 Imagine we have a Span-based Reverse method.
 To prevent redundant out of bound checks we iterate with Unsafe.Add/Unsafe.Subtract. This will result in something like this:
 ```csharp
@@ -58,6 +60,8 @@ do
 } while (--left < ++right);
 ```
 
+----
+
 ### Operators
 Unsafe only have the methods IsSame/IsAddressGreaterThan/IsAddressLessThan to compare two references.
 
@@ -90,6 +94,8 @@ if (left >= right)
 // LessThanOrEquals
 if (left <= right)
 ```
+
+----
 
 ### Casts
 Iterator<T> can also be casted to a built-in type explicitly.
