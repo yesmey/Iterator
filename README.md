@@ -6,6 +6,27 @@ It makes use of C# 11 preview that allows reference members in ref structs.
 
 ------
 
+### Iterator
+```Iterator<T>``` is a stack allocated struct that only contains a reference to T;
+
+```csharp
+int val;
+Iterator<int> iterator = new Iterator<int>(ref val);
+
+Span<int> span;
+Iterator<int> iterator = array.ToIterator();
+//iterator == span[0];
+```
+
+```IteratorRange<T>``` is a helper struct that contains two ```Iterator<T>```'s pointing to the first and last location of a range;
+
+```csharp
+Span<int> span;
+IteratorRange<int> range = span.ToIteratorRange();
+//range.First == span[0];
+//range.Last == span[^1];
+```
+
 ### Usage
 Imagine we have a Span-based Reverse method.
 To prevent redundant out of bound checks we iterate with Unsafe.Add/Unsafe.Subtract. This will result in something like this:
@@ -29,16 +50,14 @@ static void Reverse<T>(Span<T> span)
 }
 ```
 
-We can use Iterator<T> to move through the content instead with regular arithmetic operators.
+We can use Iterator<T> and IteratorRange<T> instead to move through the content with regular arithmetic operators.
 ```csharp
 static void Reverse<T>(Span<T> span)
 {
     if (span.Length <= 1)
         return;
 
-    Iterator<T> first = span.ToIterator();
-    Iterator<T> last = span.ToIterator(span.Length - 1);
-    // Iterator<T> last = first + (span.Length - 1); also works
+    var (first, last) = span.ToIteratorRange();
     do
     {
         // .Value access the underlying value
@@ -52,7 +71,7 @@ static void Reverse<T>(Span<T> span)
 }
 ```
 
-If we want to write the while loop as a oneliner:
+If we want to write the while loop as a oneliner, which would have been very difficult before
 ```csharp
 do
 {

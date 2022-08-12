@@ -13,12 +13,13 @@ using Yesmey;
         if (span.Length <= 1)
             return;
 
-        Iterator<T> left = span.ToIterator();
-        Iterator<T> right = span.ToIterator(span.Length - 1);
+        var (left, right) = span.ToIteratorRange();
         do
         {
             Swap(ref left.Value, ref right.Value);
-        } while (++left < --right);
+            left++;
+            right--;
+        } while (left < right);
 
         static void Swap(ref T left, ref T right)
             => (left, right) = (right, left);
@@ -33,9 +34,7 @@ using Yesmey;
 
     static void Fill<T>(Span<T> span, T value)
     {
-        Iterator<T> current = span.ToIterator();
-        Iterator<T> last = span.ToIterator(span.Length - 1);
-
+        var (current, last) = span.ToIteratorRange();
         while (current <= last)
         {
             current.Value = value;
@@ -71,4 +70,15 @@ using Yesmey;
     Span<byte> bytes2 = Enumerable.Range(0, 18).Select(x => (byte)x).ToArray();
     ClearBunchOfBytes2(ref MemoryMarshal.GetReference(bytes2));
     Console.WriteLine(string.Join(',', bytes2.ToArray()));
+}
+
+{
+    Span<int> ints = Enumerable.Range(0, 50).ToArray();
+    IteratorRange<int> range = ints.ToIteratorRange();
+    long sum = 0;
+    foreach (int value in range)
+    {
+        sum += value;
+    }
+    Console.WriteLine(sum);
 }
