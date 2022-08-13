@@ -94,4 +94,23 @@ public class IteratorOperatorTests
         Assert.False(a == b);
         Assert.True(a != b);
     }
+
+    [Fact]
+    public void DifferenceOperator()
+    {
+        Span<int> input = stackalloc int[] { 1, 2, 3 };
+        Iterator<int> a = input.ToIterator();
+        Iterator<int> b = input.ToIterator();
+        int diff = a - b;
+        Assert.Equal(0, diff);
+
+        a++;
+        diff = a - b;
+        Assert.Equal(1, diff);
+
+        a--;
+        b++;
+        diff = a - b;
+        Assert.Equal(-1, diff);
+    }
 }

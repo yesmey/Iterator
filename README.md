@@ -1,5 +1,6 @@
 ## Introduction
 A little experiment of implementing a pointer arithmetics for managed pointers in C#.
+
 It requires C# 11 preview which allows reference members in ref structs.
 
 **This type is only intended for low-level use. Incorrect usage might corrupt memory or destabilize the .NET runtime**
@@ -137,6 +138,19 @@ if (left < right)
 if (left >= right)
 // LessThanOrEquals
 if (left <= right)
+```
+
+To get the distance between two different references, using the Unsafe class, you take the total ByteOffset and divide it by the size of the pointer.
+```csharp
+ref T larger, smaller;
+// The order of the input parameters is intentional
+return (int)(Unsafe.ByteOffset(ref smaller, ref larger) / Unsafe.SizeOf<T>());
+```
+
+With iterators this operation is simply
+```csharp
+Iterator<T> larger, smaller;
+return larger - smaller;
 ```
 
 ----
