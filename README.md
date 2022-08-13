@@ -1,6 +1,6 @@
 ## Introduction
-A little experiment of implementing a C++-style iterator in C#.
-It makes use of C# 11 preview that allows reference members in ref structs.
+A little experiment of implementing a pointer arithmetics for managed pointers in C#.
+It requires C# 11 preview which allows reference members in ref structs.
 
 **This type is only intended for low-level use. Incorrect usage might corrupt memory or destabilize the .NET runtime**
 
@@ -40,7 +40,7 @@ static void Reverse<T>(Span<T> span)
     ref T last = ref Unsafe.Subtract(ref Unsafe.Add(ref first, span.Length), 1);
     do
     {
-        Swap(ref left, ref right);
+        Swap(ref first, ref last);
         first = ref Unsafe.Add(ref first, 1);
         last = ref Unsafe.Subtract(ref last, 1);
     } while (Unsafe.IsAddressLessThan(ref first, ref last));
@@ -62,22 +62,47 @@ static void Reverse<T>(Span<T> span)
     {
         // .Value access the underlying value
         Swap(ref first.Value, ref last.Value);
-        first++;
-        last--;
-    } while (left < right);
+    } while (++first < --last);
 
     static void Swap(ref T left, ref T right)
         => (left, right) = (right, left);
 }
 ```
 
-If we want to write the while loop as a oneliner, which would have been very difficult before
-```csharp
-do
-{
-    Swap(ref first.Value, ref last.Value);
-} while (--left < ++right);
+<details>
+<summary>The two Reverse methods above produces the exact same assembly output in .NET 7.0 preview 7</summary>
+
+```assembly
+       mov       rax,[rcx+8]
+       test      rax,rax
+       je        short M00_L03
+       lea       rdx,[rax+10]
+       mov       eax,[rax+8]
+M00_L00:
+       cmp       eax,1
+       jle       short M00_L02
+       cdqe
+       lea       rax,[rdx+rax*4+0FFFC]
+       nop       dword ptr [rax]
+M00_L01:
+       mov       ecx,[rax]
+       mov       r8d,[rdx]
+       mov       [rdx],ecx
+       mov       [rax],r8d
+       add       rdx,4
+       add       rax,0FFFFFFFFFFFFFFFC
+       cmp       rdx,rax
+       jb        short M00_L01
+M00_L02:
+       ret
+M00_L03:
+       xor       edx,edx
+       xor       eax,eax
+       jmp       short M00_L00
+; Total bytes of code 62
 ```
+
+</details>
 
 ----
 
