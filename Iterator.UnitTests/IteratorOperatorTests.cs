@@ -1,6 +1,4 @@
-using Yesmey;
-
-namespace UnitTests;
+namespace Iterator.UnitTests;
 
 public class IteratorOperatorTests
 {
