@@ -7,6 +7,7 @@ public readonly ref struct IteratorRange<T>
     private readonly Iterator<T> _first;
     private readonly Iterator<T> _last;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public IteratorRange(Iterator<T> first, Iterator<T> last)
     {
         _first = first;
@@ -17,6 +18,7 @@ public readonly ref struct IteratorRange<T>
 
     public Iterator<T> Last => _last;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Deconstruct(out Iterator<T> first, out Iterator<T> last)
     {
         first = _first;
