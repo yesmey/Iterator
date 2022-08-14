@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Yesmey;
+namespace UnsafeHelper;
 
 public readonly ref struct IteratorRange<T>
 {

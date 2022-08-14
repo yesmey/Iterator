@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Yesmey;
+namespace UnsafeHelper;
 
 public static class IteratorExtensions
 {

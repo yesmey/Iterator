@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Yesmey;
+namespace UnsafeHelper;
 
 public ref partial struct Iterator<T>
 {

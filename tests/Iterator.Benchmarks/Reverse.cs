@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using BenchmarkDotNet.Attributes;
-using Yesmey;
+using UnsafeHelper;
 
 namespace Iterator.Benchmarks;
 

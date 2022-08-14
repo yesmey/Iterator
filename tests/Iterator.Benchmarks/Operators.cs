@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
-using Yesmey;
+using UnsafeHelper;
 
 namespace Iterator.Benchmarks;
 

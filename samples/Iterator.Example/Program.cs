@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Yesmey;
+using UnsafeHelper;
 
 // Example on how to implement a Reverse function
 {
