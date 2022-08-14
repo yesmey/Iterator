@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iterator", "Iterator\Iterator.csproj", "{AA14FD92-597D-4D04-B72B-6872F517512F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iterator", "src\Iterator\Iterator.csproj", "{AA14FD92-597D-4D04-B72B-6872F517512F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iterator.UnitTests", "Iterator.UnitTests\Iterator.UnitTests.csproj", "{FA96DF85-3F6D-4ACE-82C4-9DC86B22F3D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iterator.UnitTests", "tests\Iterator.UnitTests\Iterator.UnitTests.csproj", "{FA96DF85-3F6D-4ACE-82C4-9DC86B22F3D5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iterator.Example", "Iterator.Example\Iterator.Example.csproj", "{EAE52F9C-679E-4DCB-AEDC-DAAB256C1380}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iterator.Example", "samples\Iterator.Example\Iterator.Example.csproj", "{EAE52F9C-679E-4DCB-AEDC-DAAB256C1380}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iterator.Benchmarks", "Iterator.Benchmarks\Iterator.Benchmarks.csproj", "{120AAB40-5DCB-49BC-B455-7BE892B67E2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iterator.Benchmarks", "tests\Iterator.Benchmarks\Iterator.Benchmarks.csproj", "{120AAB40-5DCB-49BC-B455-7BE892B67E2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{689BB295-C973-48E1-9493-8DD9305E7597}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{803178B6-BB5F-473E-A853-903BA0476E6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +40,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FA96DF85-3F6D-4ACE-82C4-9DC86B22F3D5} = {689BB295-C973-48E1-9493-8DD9305E7597}
+		{EAE52F9C-679E-4DCB-AEDC-DAAB256C1380} = {803178B6-BB5F-473E-A853-903BA0476E6C}
+		{120AAB40-5DCB-49BC-B455-7BE892B67E2F} = {689BB295-C973-48E1-9493-8DD9305E7597}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5CBD1D01-A4AD-45B4-A1C4-3042D884DA0C}

@@ -1,5 +1,5 @@
-﻿using BenchmarkDotNet.Attributes;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
+using BenchmarkDotNet.Attributes;
 using Yesmey;
 
 namespace Iterator.Benchmarks;

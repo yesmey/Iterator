@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -8,7 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Iterator\Iterator.csproj" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
   </ItemGroup>
 
+  <ItemGroup>
+	<ProjectReference Include="..\..\src\Iterator\Iterator.csproj" />
+  </ItemGroup>
 </Project>
