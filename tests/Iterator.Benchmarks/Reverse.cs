@@ -8,7 +8,7 @@ namespace Iterator.Benchmarks;
 [DisassemblyDiagnoser]
 public class Reverse
 {
-    private int[] _array;
+    private int[]? _array;
 
     [GlobalSetup]
     public void SetupReverse() => _array = Enumerable.Range(0, 1000).ToArray();
@@ -16,7 +16,7 @@ public class Reverse
     [Benchmark]
     public void Regular()
     {
-        Reverse(_array.AsSpan());
+        Reverse(_array!.AsSpan());
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void Reverse<T>(Span<T> span)
@@ -28,7 +28,7 @@ public class Reverse
             ref T last = ref Unsafe.Subtract(ref Unsafe.Add(ref first, span.Length), 1);
             do
             {
-                Swap<T>(ref first, ref last);
+                (first, last) = (last, first);
                 first = ref Unsafe.Add(ref first, 1);
                 last = ref Unsafe.Subtract(ref last, 1);
             } while (Unsafe.IsAddressLessThan(ref first, ref last));
@@ -38,7 +38,7 @@ public class Reverse
     [Benchmark]
     public void New()
     {
-        Reverse(_array.AsSpan());
+        Reverse(_array!.AsSpan());
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void Reverse<T>(Span<T> span)
@@ -46,15 +46,15 @@ public class Reverse
             if (span.Length <= 1)
                 return;
 
-            var (first, last) = span.ToIteratorRange();
+            (Iterator<T> first, Iterator<T> last) = span.ToIteratorRange();
             do
             {
                 Swap(ref first.Value, ref last.Value);
             } while (++first < --last);
         }
-    }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void Swap<T>(ref T left, ref T right)
-        => (left, right) = (right, left);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static void Swap<T>(ref T left, ref T right)
+            => (left, right) = (right, left);
+    }
 }

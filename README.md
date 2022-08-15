@@ -1,5 +1,5 @@
 ## Introduction
-A little experiment of implementing a pointer arithmetics for managed pointers in C#.
+Iterator introduces pointer arithmetics for managed pointers in C#.
 
 It requires C# 11 preview which allows reference members in ref structs.
 
@@ -16,7 +16,7 @@ Iterator<int> iterator = new Iterator<int>(ref val);
 
 Span<int> span;
 Iterator<int> iterator = array.ToIterator();
-//iterator == span[0];
+//iterator == ref span[0];
 ```
 
 ```IteratorRange<T>``` is a helper struct that contains two ```Iterator<T>```'s pointing to the first and last location of a range;
@@ -24,8 +24,8 @@ Iterator<int> iterator = array.ToIterator();
 ```csharp
 Span<int> span;
 IteratorRange<int> range = span.ToIteratorRange();
-//range.First == span[0];
-//range.Last == span[^1];
+//range.First == ref span[0];
+//range.Last == ref span[^1];
 ```
 
 ### Usage
@@ -144,13 +144,13 @@ To get the distance between two different references, using the Unsafe class, yo
 ```csharp
 ref T larger, smaller;
 // The order of the input parameters is intentional
-return (int)(Unsafe.ByteOffset(ref smaller, ref larger) / Unsafe.SizeOf<T>());
+nint diff = (nint)(Unsafe.ByteOffset(ref smaller, ref larger) / Unsafe.SizeOf<T>());
 ```
 
 With iterators this operation is simply
 ```csharp
 Iterator<T> larger, smaller;
-return larger - smaller;
+nint diff = larger - smaller;
 ```
 
 ----

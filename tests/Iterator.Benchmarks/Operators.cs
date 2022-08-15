@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using BenchmarkDotNet.Attributes;
 using UnsafeHelper;
 
@@ -7,7 +9,7 @@ namespace Iterator.Benchmarks;
 [DisassemblyDiagnoser]
 public class Operators
 {
-    private int[] _array;
+    private int[]? _array;
 
     [GlobalSetup]
     public void SetupReverse()
@@ -16,16 +18,17 @@ public class Operators
     }
 
     [Benchmark]
-    public int Regular()
+    public nint Regular()
     {
-        return (int)(Unsafe.ByteOffset(ref _array[1], ref _array[0]) / Unsafe.SizeOf<int>());
+        ref int first = ref MemoryMarshal.GetArrayDataReference(_array!);
+        ref int second = ref Unsafe.Add(ref first, 1);
+        return Unsafe.ByteOffset(ref second, ref first) / Unsafe.SizeOf<int>();
     }
 
     [Benchmark]
-    public int New()
+    public nint New()
     {
-        Iterator<int> first = new Iterator<int>(ref _array[0]);
-        Iterator<int> second = new Iterator<int>(ref _array[1]);
+        (Iterator<int> first, Iterator<int> second) = _array!.ToIteratorRange(0, 1);
         return second - first;
     }
 }

@@ -101,7 +101,7 @@ public class IteratorOperatorTests
         Span<int> input = stackalloc int[] { 1, 2, 3 };
         Iterator<int> a = input.ToIterator();
         Iterator<int> b = input.ToIterator();
-        int diff = a - b;
+        nint diff = a - b;
         Assert.Equal(0, diff);
 
         a++;

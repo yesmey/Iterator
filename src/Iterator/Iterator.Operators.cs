@@ -61,16 +61,16 @@ public ref partial struct Iterator<T>
     }
 
     /// <summary>
-    /// Determines the byte offset between origin and target
+    /// Determines the byte offset between origin and target.
     /// </summary>
     /// <param name="left">The iterator to the origin</param>
     /// <param name="right">The iterator to the target</param>
     /// <returns>The byte offset from origin to target</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int operator -(Iterator<T> origin, Iterator<T> target)
+    public static nint operator -(Iterator<T> origin, Iterator<T> target)
     {
         // ByteOffset input is reversed
-        return (int)((nuint)Unsafe.ByteOffset(ref target._reference, ref origin._reference) / (nuint)Unsafe.SizeOf<T>());
+        return Unsafe.ByteOffset(ref target._reference, ref origin._reference) / Unsafe.SizeOf<T>();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
