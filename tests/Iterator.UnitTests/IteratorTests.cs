@@ -32,7 +32,7 @@ public class IteratorTests
         Assert.Equal(span[0], range.First.Value);
         Assert.Equal(span[^1], range.Last.Value);
 
-        range = span.ToIteratorRange(2, span.Length - 1);
+        range = span.ToIteratorRange(2, (nuint)span.Length - 1);
         Assert.Equal(span[2], range.First.Value);
         Assert.Equal(span[^1], range.Last.Value);
 
@@ -53,7 +53,7 @@ public class IteratorTests
         Assert.Equal(array[0], range.First.Value);
         Assert.Equal(array[^1], range.Last.Value);
 
-        range = array.ToIteratorRange(2, array.Length - 1);
+        range = array.ToIteratorRange(2, (nuint)array.Length - 1);
         Assert.Equal(array[2], range.First.Value);
         Assert.Equal(array[^1], range.Last.Value);
 

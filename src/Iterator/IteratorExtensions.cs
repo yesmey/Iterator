@@ -10,7 +10,7 @@ public static class IteratorExtensions
         => new(ref MemoryMarshal.GetReference(span));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Iterator<T> ToIterator<T>(this Span<T> span, int offset)
+    public static Iterator<T> ToIterator<T>(this Span<T> span, nuint offset)
         => new(ref Unsafe.Add(ref MemoryMarshal.GetReference(span), offset));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -18,7 +18,7 @@ public static class IteratorExtensions
         => new(ref MemoryMarshal.GetArrayDataReference(array));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Iterator<T> ToIterator<T>(this T[] array, int offset)
+    public static Iterator<T> ToIterator<T>(this T[] array, nuint offset)
         => new(ref Unsafe.Add(ref MemoryMarshal.GetArrayDataReference(array), offset));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -30,7 +30,7 @@ public static class IteratorExtensions
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IteratorRange<T> ToIteratorRange<T>(this Span<T> span, int offset)
+    public static IteratorRange<T> ToIteratorRange<T>(this Span<T> span, nuint offset)
     {
         ref T first = ref MemoryMarshal.GetReference(span);
         ref T last = ref Unsafe.Add(ref first, offset);
@@ -38,7 +38,7 @@ public static class IteratorExtensions
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IteratorRange<T> ToIteratorRange<T>(this Span<T> span, int startOffset, int endOffset)
+    public static IteratorRange<T> ToIteratorRange<T>(this Span<T> span, nuint startOffset, nuint endOffset)
     {
         ref T first = ref Unsafe.Add(ref MemoryMarshal.GetReference(span), startOffset);
         ref T last = ref Unsafe.Add(ref first, endOffset - startOffset);
@@ -54,7 +54,7 @@ public static class IteratorExtensions
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IteratorRange<T> ToIteratorRange<T>(this T[] array, int startOffset, int endOffset)
+    public static IteratorRange<T> ToIteratorRange<T>(this T[] array, nuint startOffset, nuint endOffset)
     {
         ref T first = ref Unsafe.Add(ref MemoryMarshal.GetArrayDataReference(array), startOffset);
         ref T last = ref Unsafe.Add(ref first, endOffset - startOffset);
